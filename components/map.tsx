@@ -18,7 +18,7 @@ const Map = () => {
   }, []);
 
   return (
-    <div style={{ height: "500px", width: "100%" }}>
+    <div className="h-screen w-screen">
       <MapContainer
         center={position}
         zoom={13}

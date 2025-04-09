@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 export const MapComponent = dynamic(() => import("@/components/map"), {
   ssr: false,
   loading: () => (
-    <div style={{ height: "500px", width: "100%" }}>Loading map...</div>
+    <div className="flex items-center justify-center h-screen w-screen">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
+    </div>
   ),
 });
