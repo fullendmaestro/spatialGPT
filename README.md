@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+SpatialGPT: Conversational Geospatial Weather Intelligence
+🔥 Core Idea
+An AI-powered assistant that helps users explore and understand weather patterns, forecasts, and climate trends for any location on Earth—through natural language and map-based interaction, powered by the Open-Meteo API and geolocation data.
 
-## Getting Started
+🎯 Key Use Cases
 
-First, run the development server:
+1. Localized Weather Q&A
+   Natural language prompts like:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+“What’s the weather in Tokyo this weekend?”
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+“Will it snow in Berlin tomorrow?”
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+“How hot will it get in Phoenix next week?”
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Supports current weather, 7–14 day forecasts, and hourly details (wind, temp, humidity).
 
-## Learn More
+2. Weather Trends & Historical Insight
+   Ask about historical weather trends using Open-Meteo’s archive support:
 
-To learn more about Next.js, take a look at the following resources:
+“How has rainfall changed in Mumbai over the past 5 years?”
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+“What were the average temperatures in London last summer?”
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Visualize trends using charts/graphs tied to maps.
 
-## Deploy on Vercel
+3. Climate-Aware Travel & Planning
+   Assist users in choosing destinations or planning trips based on climate:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+“Where is it sunny and warm in Europe right now?”
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+“I want to hike in a cool place with no rain this week—any suggestions?”
+
+Combine Open-Meteo forecasts with hiking trails, points of interest via OpenStreetMap.
+
+4. Extreme Weather Alerts
+   Real-time monitoring and alerts:
+
+“Are there any heatwaves or storms nearby?”
+
+“Warn me if a strong wind alert is issued within 50 km.”
+
+Could use natural hazard feeds or augment Open-Meteo’s wind/gust thresholds.
+
+5. Environmental Learning
+   Ask climate and weather-related science questions contextualized to location:
+
+“Why is it so windy in the Netherlands?”
+
+“What’s a rain shadow and where can I see one?”
+
+“What kind of climate does Nairobi have?”
+
+🧭 User Experience
+🗺️ Map-based interaction: Right-click or tap to ask, “What’s the weather here?” or “Attach this location to a prompt.”
+
+💬 Chat interface: Gemini responds naturally and intelligently, backed by real-time weather data.
+
+📊 Visual components: Graphs, timelines, heatmaps for temperature or rainfall.
+
+🔧 APIs & Tools
+Open-Meteo: Weather, historical, and forecast data
+
+OpenStreetMap / Leaflet / MapLibre: Mapping
+
+Gemini 1.5 Pro: Natural language interface
+
+Optional:
+
+NASA POWER for enhanced climate variables
+
+Air Quality Open Data Platform for air quality overlays

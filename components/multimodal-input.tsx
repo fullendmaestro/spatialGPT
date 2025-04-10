@@ -1,6 +1,6 @@
 "use client";
 
-import type { Attachment, Message, UIMessage } from "ai";
+import type { Attachment, UIMessage } from "ai";
 import cx from "classnames";
 import type React from "react";
 import {

@@ -1,13 +1,11 @@
 "use client";
 
-import type { Attachment, UIMessage } from "ai";
+import type { Attachment } from "ai";
 import { useChat } from "@ai-sdk/react";
 import { useState } from "react";
 import { ChatHeader } from "@/components/chat-header";
-import { generateUUID } from "@/lib/utils";
 import { MultimodalInput } from "./multimodal-input";
 import { Messages } from "./messages";
-import { toast } from "sonner";
 
 export function Chat() {
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
@@ -18,7 +16,6 @@ export function Chat() {
     status,
     setInput,
     handleSubmit,
-    handleInputChange,
     append,
     stop,
     setMessages,

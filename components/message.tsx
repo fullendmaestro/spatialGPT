@@ -3,7 +3,7 @@
 import type { UIMessage } from "ai";
 import cx from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
-import { memo, useState } from "react";
+import { memo } from "react";
 import { SparklesIcon } from "lucide-react";
 import { Markdown } from "./markdown";
 import { MessageActions } from "./message-actions";
@@ -11,9 +11,6 @@ import { PreviewAttachment } from "./preview-attachment";
 import { Weather } from "./weather";
 import equal from "fast-deep-equal";
 import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
-import { UseChatHelpers } from "@ai-sdk/react";
 
 const PurePreviewMessage = ({
   message,

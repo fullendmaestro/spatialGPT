@@ -9,8 +9,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
-import { memo } from "react";
-import equal from "fast-deep-equal";
 import { toast } from "sonner";
 
 export function MessageActions({
