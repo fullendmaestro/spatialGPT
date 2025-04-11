@@ -106,6 +106,7 @@ function PureMultimodalInput({
   const submitForm = useCallback(() => {
     handleSubmit(undefined, {
       experimental_attachments: attachments,
+      body: { coordinates: [{ latitude: 37.7749, longitude: 22.4194 }] },
     });
 
     setAttachments([]);
