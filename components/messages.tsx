@@ -11,7 +11,7 @@ interface MessagesProps {
   messages: Array<UIMessage>;
 }
 
-function PureMessages({ messages }: MessagesProps) {
+function PureMessages({ messages, status }: MessagesProps) {
   const [messagesContainerRef, messagesEndRef] =
     useScrollToBottom<HTMLDivElement>();
 
