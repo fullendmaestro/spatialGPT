@@ -14,7 +14,7 @@ export default function Home() {
         direction="horizontal"
       >
         {/* Chat Panel */}
-        <ResizablePanel className="flex-1">
+        <ResizablePanel className="flex-1" minSize={20}>
           <Chat />
         </ResizablePanel>
 
@@ -22,7 +22,7 @@ export default function Home() {
         <ResizableHandle withHandle />
 
         {/* Map Panel */}
-        <ResizablePanel className="flex-1">
+        <ResizablePanel className="flex-1" minSize={20}>
           <MapComponent />
         </ResizablePanel>
       </ResizablePanelGroup>
