@@ -128,24 +128,6 @@ function PureMultimodalInput({
     const extraFields =
       coordinateAttachments.length > 0 ? { coordinateAttachments } : undefined;
 
-    // handleSubmit(undefined, {
-    //   experimental_attachments: attachments,
-    //   body: locationData,
-    // });
-
-    // append({
-    //   role: "user",
-    //   content: input,
-    //   ...extraFields,
-    //   parts: [
-    //     {
-    //       type: "text",
-    //       text: input,
-    //       ...extraFields,
-    //     },
-    //   ],
-    // });
-
     append({
       role: "user",
       content: input,

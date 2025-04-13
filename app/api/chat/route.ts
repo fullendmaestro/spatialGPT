@@ -48,13 +48,11 @@ export async function POST(request: Request) {
       messages: Array<ExtUIMessage>;
     } = await request.json();
 
-    // Reformat messages
+    // Reformat messages.
+    // Note: This is just a workaround to get the coordinates
+    //        into the ai message as vercel ai sdk will remove extra fields
+    //        except the ai message schema.
     const reformattedMessages = reformatMessages(messages);
-
-    console.log(
-      "Reformatted Messages",
-      JSON.stringify(reformattedMessages, null, 2)
-    );
 
     return createDataStreamResponse({
       execute: (dataStream) => {
