@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Bot, X, RefreshCw } from "lucide-react";
+import { Earth, X, RefreshCw } from "lucide-react";
 
 export function ChatHeader() {
   const handleReset = () => {
@@ -13,7 +13,7 @@ export function ChatHeader() {
     <div className="flex sticky top-0 items-center justify-between border-b bg-background py-2 px-4 shadow-sm">
       <div className="flex items-center gap-3">
         <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-          <Bot className="h-5 w-5 text-primary" />
+          <Earth className="h-9 w-9 text-primary" />
         </div>
         <div>
           <h2 className="text-lg font-semibold leading-none">SpatialGPT</h2>
