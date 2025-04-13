@@ -16,13 +16,26 @@ import {
 import { toast } from "sonner";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 
-import { ArrowUpIcon, PaperclipIcon, CircleStopIcon } from "lucide-react";
+import {
+  ArrowUpIcon,
+  PaperclipIcon,
+  StopCircleIcon,
+  MapPinIcon,
+} from "lucide-react";
 import { PreviewAttachment } from "./preview-attachment";
+import { CoordinateAttachment } from "./coordinate-attachment";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { SuggestedActions } from "./suggested-actions";
 import equal from "fast-deep-equal";
-import { UseChatHelpers } from "@ai-sdk/react";
+import type { UseChatHelpers } from "@ai-sdk/react";
+import { useMapStore, useChatStore } from "@/lib/store";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 function PureMultimodalInput({
   input,
@@ -51,6 +64,12 @@ function PureMultimodalInput({
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { width } = useWindowSize();
+  const { coordinate } = useMapStore();
+  const {
+    coordinateAttachments,
+    removeCoordinateAttachment,
+    clearCoordinateAttachments,
+  } = useChatStore();
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -104,19 +123,33 @@ function PureMultimodalInput({
   const [uploadQueue, setUploadQueue] = useState<Array<string>>([]);
 
   const submitForm = useCallback(() => {
+    // Prepare coordinate data for the API
+    const locationData =
+      coordinateAttachments.length > 0 ? { coordinateAttachments } : undefined;
+
     handleSubmit(undefined, {
       experimental_attachments: attachments,
-      body: { coordinates: [{ latitude: 37.7749, longitude: 22.4194 }] },
+      body: locationData,
     });
 
     setAttachments([]);
     setLocalStorageInput("");
     resetHeight();
+    clearCoordinateAttachments();
 
     if (width && width > 768) {
       textareaRef.current?.focus();
     }
-  }, [attachments, handleSubmit, setAttachments, setLocalStorageInput, width]);
+  }, [
+    attachments,
+    coordinate,
+    handleSubmit,
+    setAttachments,
+    setLocalStorageInput,
+    width,
+    coordinateAttachments,
+    clearCoordinateAttachments,
+  ]);
 
   const uploadFile = async (file: File) => {
     const formData = new FormData();
@@ -171,11 +204,16 @@ function PureMultimodalInput({
     [setAttachments]
   );
 
+  const hasAttachments =
+    attachments.length > 0 ||
+    uploadQueue.length > 0 ||
+    coordinateAttachments.length > 0;
+
   return (
     <div className="relative w-full flex flex-col gap-4">
-      {messages.length === 0 &&
-        attachments.length === 0 &&
-        uploadQueue.length === 0 && <SuggestedActions append={append} />}
+      {messages.length === 0 && !hasAttachments && (
+        <SuggestedActions append={append} />
+      )}
 
       <input
         type="file"
@@ -186,15 +224,17 @@ function PureMultimodalInput({
         tabIndex={-1}
       />
 
-      {(attachments.length > 0 || uploadQueue.length > 0) && (
+      {hasAttachments && (
         <div
           data-testid="attachments-preview"
-          className="flex flex-row gap-2 overflow-x-scroll items-end"
+          className="flex flex-row gap-3 overflow-x-auto items-end pb-1"
         >
+          {/* File attachments */}
           {attachments.map((attachment) => (
             <PreviewAttachment key={attachment.url} attachment={attachment} />
           ))}
 
+          {/* Upload queue */}
           {uploadQueue.map((filename) => (
             <PreviewAttachment
               key={filename}
@@ -204,6 +244,15 @@ function PureMultimodalInput({
                 contentType: "",
               }}
               isUploading={true}
+            />
+          ))}
+
+          {/* Coordinate attachments */}
+          {coordinateAttachments.map((coords, index) => (
+            <CoordinateAttachment
+              key={`coord-${index}`}
+              coordinate={coords}
+              onRemove={() => removeCoordinateAttachment(index)}
             />
           ))}
         </div>
@@ -240,6 +289,12 @@ function PureMultimodalInput({
 
       <div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start">
         <AttachmentsButton fileInputRef={fileInputRef} status={status} />
+        <Button
+          data-testid="location-button"
+          className="rounded-md rounded-bl-lg p-[7px] h-fit dark:border-zinc-700 hover:dark:bg-zinc-900 hover:bg-zinc-200 ml-1"
+        >
+          <MapPinIcon size={14} />
+        </Button>
       </div>
 
       <div className="absolute bottom-0 right-0 p-2 w-fit flex flex-row justify-end">
@@ -310,7 +365,7 @@ function PureStopButton({
         setMessages((messages) => messages);
       }}
     >
-      <CircleStopIcon size={14} />
+      <StopCircleIcon size={14} />
     </Button>
   );
 }
