@@ -12,10 +12,7 @@ import { CoordinateAttachment } from "./coordinate-attachment";
 import { Weather } from "./weather";
 import equal from "fast-deep-equal";
 import { cn } from "@/lib/utils";
-
-type ExtUIMessage = UIMessage & {
-  coordinateAttachments?: Array<{ latitude: number; longitude: number }>;
-};
+import { ExtUIMessage } from "@/types";
 
 const PurePreviewMessage = ({
   message,
