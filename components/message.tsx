@@ -8,15 +8,20 @@ import { SparklesIcon } from "lucide-react";
 import { Markdown } from "./markdown";
 import { MessageActions } from "./message-actions";
 import { PreviewAttachment } from "./preview-attachment";
+import { CoordinateAttachment } from "./coordinate-attachment";
 import { Weather } from "./weather";
 import equal from "fast-deep-equal";
 import { cn } from "@/lib/utils";
+
+type ExtUIMessage = UIMessage & {
+  coordinateAttachments?: Array<{ latitude: number; longitude: number }>;
+};
 
 const PurePreviewMessage = ({
   message,
   isLoading,
 }: {
-  message: UIMessage;
+  message: ExtUIMessage;
   isLoading: boolean;
 }) => {
   return (
@@ -38,6 +43,28 @@ const PurePreviewMessage = ({
           )}
 
           <div className="flex flex-col gap-4 w-full">
+            {/* Render coordinateAttachments */}
+            {message.coordinateAttachments && (
+              <div
+                data-testid={`message-coordinate-attachments`}
+                className="flex flex-row gap-2"
+              >
+                {message.coordinateAttachments.map(
+                  (
+                    coordinate: { latitude: number; longitude: number },
+                    index: number
+                  ) => (
+                    <CoordinateAttachment
+                      key={`coord-${index}`}
+                      coordinate={coordinate}
+                      showRemove={false} // Disable remove button in message preview
+                    />
+                  )
+                )}
+              </div>
+            )}
+
+            {/* Render experimental attachments */}
             {message.experimental_attachments && (
               <div
                 data-testid={`message-attachments`}
@@ -52,6 +79,7 @@ const PurePreviewMessage = ({
               </div>
             )}
 
+            {/* Render message parts */}
             {message.parts?.map((part, index) => {
               const { type } = part;
               const key = `message-${message.id}-part-${index}`;

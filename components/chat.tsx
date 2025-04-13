@@ -19,7 +19,9 @@ export function Chat() {
     append,
     stop,
     setMessages,
-  } = useChat();
+  } = useChat({
+    sendExtraMessageFields: true,
+  });
 
   return (
     <>

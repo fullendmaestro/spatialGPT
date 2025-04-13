@@ -124,13 +124,35 @@ function PureMultimodalInput({
 
   const submitForm = useCallback(() => {
     // Prepare coordinate data for the API
-    const locationData =
+    // Prepare coordinate data for the API
+    const extraFields =
       coordinateAttachments.length > 0 ? { coordinateAttachments } : undefined;
 
-    handleSubmit(undefined, {
-      experimental_attachments: attachments,
-      body: locationData,
+    // handleSubmit(undefined, {
+    //   experimental_attachments: attachments,
+    //   body: locationData,
+    // });
+
+    // append({
+    //   role: "user",
+    //   content: input,
+    //   ...extraFields,
+    //   parts: [
+    //     {
+    //       type: "text",
+    //       text: input,
+    //       ...extraFields,
+    //     },
+    //   ],
+    // });
+
+    append({
+      role: "user",
+      content: input,
+      ...extraFields,
     });
+
+    setInput("");
 
     setAttachments([]);
     setLocalStorageInput("");
@@ -289,12 +311,12 @@ function PureMultimodalInput({
 
       <div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start">
         <AttachmentsButton fileInputRef={fileInputRef} status={status} />
-        <Button
+        {/* <Button
           data-testid="location-button"
           className="rounded-md rounded-bl-lg p-[7px] h-fit dark:border-zinc-700 hover:dark:bg-zinc-900 hover:bg-zinc-200 ml-1"
         >
           <MapPinIcon size={14} />
-        </Button>
+        </Button> */}
       </div>
 
       <div className="absolute bottom-0 right-0 p-2 w-fit flex flex-row justify-end">
