@@ -25,7 +25,7 @@ export function Chat() {
 
   return (
     <>
-      <div className="flex flex-col min-w-0 h-dvh bg-background">
+      <div className="flex flex-col min-w-0 h-[calc(100vh-3.5625rem)] bg-background">
         <ChatHeader />
 
         <Messages status={status} messages={messages} />
