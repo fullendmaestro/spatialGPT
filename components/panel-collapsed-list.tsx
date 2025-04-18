@@ -1,22 +1,22 @@
 "use client";
 
 import * as React from "react";
-import { PanelCollapsedHeader } from "./panel-collapsed-header";
+import { CollapsedPanelHeader } from "./panel-collapsed-header";
 
-interface PanelCollapsedListProps {
+interface CollapsedPanelListProps {
   items: { id: string; description: string }[];
   onCollapse?: (id: string) => void;
 }
 
-export function PanelCollapsedList({
+export function CollapsedPanelList({
   items,
   onCollapse,
-}: PanelCollapsedListProps) {
+}: CollapsedPanelListProps) {
   return (
     <div className="space-y-4">
       {items.map((item) => (
         <div key={item.id} className="border rounded-lg shadow-sm">
-          <PanelCollapsedHeader
+          <CollapsedPanelHeader
             description={item.description}
             collapse={() => onCollapse?.(item.id)}
           />

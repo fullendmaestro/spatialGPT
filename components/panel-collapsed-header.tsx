@@ -5,15 +5,15 @@ import { cn } from "@/lib/utils";
 import { Maximize, X, ChevronUp } from "lucide-react";
 import { Button } from "./ui/button";
 
-interface PanelCollapsedHeaderProps {
+interface CollapsedPanelHeaderProps {
   description?: string;
   collapse?: () => void;
 }
 
-export function PanelCollapsedHeader({
+export function CollapsedPanelHeader({
   description,
   collapse,
-}: PanelCollapsedHeaderProps) {
+}: CollapsedPanelHeaderProps) {
   return (
     <div className="flex flex-col items-center bg-background border rounded-lg shadow-sm overflow-hidden">
       <div
