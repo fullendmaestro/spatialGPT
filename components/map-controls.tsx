@@ -488,9 +488,28 @@ export function MapControls({ setMapType, mapType }: MapControlsProps) {
 
               {!isPoiLoading && poiResults.length > 0 && (
                 <div className="mt-2">
-                  <h4 className="text-sm font-medium mb-1">
-                    Results ({poiResults.length})
-                  </h4>
+                  <div className="flex justify-between items-center mb-1">
+                    <h4 className="text-sm font-medium">
+                      Results ({poiResults.length})
+                    </h4>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-red-500"
+                      onClick={() => {
+                        // Clear all POI markers from the map
+                        poiMarkersRef.current.forEach((marker) => {
+                          if (map.hasLayer(marker)) {
+                            map.removeLayer(marker);
+                          }
+                        });
+                        // Reset the markers reference
+                        poiMarkersRef.current = [];
+                      }}
+                    >
+                      Clear Markers
+                    </Button>
+                  </div>
                   <div className="max-h-60 overflow-y-auto">
                     {poiResults.map((poi, index) => (
                       <div
