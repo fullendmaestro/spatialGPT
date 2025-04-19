@@ -6,6 +6,7 @@ export interface POICategory {
   id: string;
   name: string;
   value: string;
+  char?: string;
 }
 
 export interface POIResult {
@@ -24,16 +25,31 @@ export interface POIResult {
 }
 
 export const poiCategories: POICategory[] = [
-  { id: "restaurant", name: "Restaurants", value: "amenity=restaurant" },
-  { id: "cafe", name: "Cafes", value: "amenity=cafe" },
-  { id: "hotel", name: "Hotels", value: "tourism=hotel" },
-  { id: "attraction", name: "Attractions", value: "tourism=attraction" },
-  { id: "park", name: "Parks", value: "leisure=park" },
-  { id: "museum", name: "Museums", value: "tourism=museum" },
-  { id: "hospital", name: "Hospitals", value: "amenity=hospital" },
-  { id: "pharmacy", name: "Pharmacies", value: "amenity=pharmacy" },
-  { id: "fuel", name: "Gas Stations", value: "amenity=fuel" },
-  { id: "supermarket", name: "Supermarkets", value: "shop=supermarket" },
+  {
+    id: "restaurant",
+    name: "Restaurants",
+    value: "amenity=restaurant",
+    char: "🍴",
+  },
+  { id: "cafe", name: "Cafes", value: "amenity=cafe", char: "☕" },
+  { id: "hotel", name: "Hotels", value: "tourism=hotel", char: "🏨" },
+  {
+    id: "attraction",
+    name: "Attractions",
+    value: "tourism=attraction",
+    char: "🎡",
+  },
+  { id: "park", name: "Parks", value: "leisure=park", char: "🌳" },
+  { id: "museum", name: "Museums", value: "tourism=museum", char: "🏛️" },
+  { id: "hospital", name: "Hospitals", value: "amenity=hospital", char: "🏥" },
+  { id: "pharmacy", name: "Pharmacies", value: "amenity=pharmacy", char: "💊" },
+  { id: "fuel", name: "Gas Stations", value: "amenity=fuel", char: "⛽" },
+  {
+    id: "supermarket",
+    name: "Supermarkets",
+    value: "shop=supermarket",
+    char: "🛒",
+  },
 ];
 
 export function usePOISearch(

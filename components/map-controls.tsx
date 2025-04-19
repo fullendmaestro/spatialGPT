@@ -139,12 +139,16 @@ export function MapControls({ setMapType, mapType }: MapControlsProps) {
       const lat = Number.parseFloat(poi.lat);
       const lon = Number.parseFloat(poi.lon);
 
-      // Create custom icon based on category
+      // Find the corresponding emoji for the category
+      const categoryObj = poiCategories.find(
+        (cat) => cat.name === poi.category
+      );
+      const emoji = categoryObj?.char || "📍";
+
+      // Create custom icon with emoji
       const poiIcon = L.divIcon({
         className: "poi-marker",
-        html: `<div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold border-2 border-white">${poi.category.charAt(
-          0
-        )}</div>`,
+        html: `<div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold border-2 border-white">${emoji}</div>`,
         iconSize: [24, 24],
         iconAnchor: [12, 12],
       });
@@ -152,7 +156,7 @@ export function MapControls({ setMapType, mapType }: MapControlsProps) {
       const marker = L.marker([lat, lon], { icon: poiIcon }).addTo(map)
         .bindPopup(`
           <div>
-            <strong>${poi.display_name}</strong>
+            <strong>${emoji} ${poi.display_name}</strong>
             <p>${poi.category}</p>
             ${poi.distance ? `<p>${poi.distance}m away</p>` : ""}
           </div>
@@ -437,7 +441,7 @@ export function MapControls({ setMapType, mapType }: MapControlsProps) {
                   <SelectContent className="z-[1001]">
                     {poiCategories.map((category) => (
                       <SelectItem key={category.id} value={category.id}>
-                        {category.name}
+                        {`${category.char} ${category.name}`}
                       </SelectItem>
                     ))}
                   </SelectContent>
