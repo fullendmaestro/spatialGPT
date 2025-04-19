@@ -13,6 +13,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useMapStore } from "@/lib/store";
 import { MapContextMenu } from "./map-context-menu";
+import { MapControls } from "./map-controls";
 
 // This component handles map events and updates the store
 function MapEventHandler() {
@@ -65,10 +66,24 @@ function MapCenterHandler() {
   return null;
 }
 
+// This component renders the map controls
+function MapControlsWrapper({
+  mapType,
+  setMapType,
+}: {
+  mapType: "street" | "satellite" | "terrain";
+  setMapType: (type: "street" | "satellite" | "terrain") => void;
+}) {
+  return <MapControls mapType={mapType} setMapType={setMapType} />;
+}
+
 const Map = () => {
   const [position, setPosition] = useState<[number, number] | null>(null);
   const { coordinate, setCoordinate, isContextMenuOpen } = useMapStore();
   const mapRef = useRef<L.Map | null>(null);
+  const [mapType, setMapType] = useState<"street" | "satellite" | "terrain">(
+    "street"
+  );
 
   useEffect(() => {
     // Set default Leaflet marker icons
@@ -105,6 +120,34 @@ const Map = () => {
     ? position
     : [coordinate.latitude, coordinate.longitude];
 
+  // Get the appropriate tile layer URL based on the map type
+  const getTileLayerUrl = () => {
+    switch (mapType) {
+      case "street":
+        return "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+      case "satellite":
+        return "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+      case "terrain":
+        return "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png";
+      default:
+        return "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    }
+  };
+
+  // Get the appropriate attribution based on the map type
+  const getTileLayerAttribution = () => {
+    switch (mapType) {
+      case "street":
+        return '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+      case "satellite":
+        return "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community";
+      case "terrain":
+        return 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)';
+      default:
+        return '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+    }
+  };
+
   return (
     <div className="h-full w-full relative">
       {position ? (
@@ -116,9 +159,10 @@ const Map = () => {
           ref={mapRef}
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution={getTileLayerAttribution()}
+            url={getTileLayerUrl()}
           />
+
           <Marker position={markerPosition}>
             <Popup>
               Selected location <br />
@@ -126,8 +170,10 @@ const Map = () => {
               {markerPosition[1].toFixed(4)}
             </Popup>
           </Marker>
+
           <MapEventHandler />
           <MapCenterHandler />
+          <MapControlsWrapper mapType={mapType} setMapType={setMapType} />
         </MapContainer>
       ) : (
         <div className="flex items-center justify-center h-full w-full">
