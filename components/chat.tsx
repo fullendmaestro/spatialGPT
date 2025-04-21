@@ -6,9 +6,11 @@ import { useState } from "react";
 import { ChatHeader } from "@/components/chat-header";
 import { MultimodalInput } from "./multimodal-input";
 import { Messages } from "./messages";
+import { useMapStore } from "@/lib/store";
 
 export function Chat() {
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
+  const { userPosition } = useMapStore();
 
   const {
     messages,
@@ -21,6 +23,14 @@ export function Chat() {
     setMessages,
   } = useChat({
     sendExtraMessageFields: true,
+    body: {
+      userPosition: userPosition
+        ? {
+            latitude: userPosition.latitude,
+            longitude: userPosition.longitude,
+          }
+        : null, // Include userPosition in the body if available
+    },
   });
 
   return (

@@ -1,11 +1,10 @@
 "use client";
 
 import type React from "react";
-
 import { useMapStore, useChatStore } from "@/lib/store";
 import { MapPin, Navigation, Info, X, Plus, Cloud } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { reverseGeocode } from "@/lib/services/places-service";
+import { useEffect, useRef } from "react";
+import { useReverseGeocode } from "@/hooks/use-reverse-geocode";
 
 interface MapContextMenuProps {
   onClose: () => void;
@@ -20,32 +19,13 @@ export function MapContextMenu({ onClose }: MapContextMenuProps) {
   } = useMapStore();
   const { addCoordinateAttachment } = useChatStore();
   const menuRef = useRef<HTMLDivElement>(null);
-  const [placeName, setPlaceName] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
 
-  // Get place name when context menu opens
-  useEffect(() => {
-    const getPlaceName = async () => {
-      setIsLoading(true);
-      try {
-        const result = await reverseGeocode(
-          coordinate.latitude,
-          coordinate.longitude
-        );
-        if (result) {
-          setPlaceName(result.display_name);
-        }
-      } catch (error) {
-        console.error("Error getting place name:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const { data: placeNameResult, isLoading } = useReverseGeocode(
+    coordinate?.latitude ?? null,
+    coordinate?.longitude ?? null
+  );
 
-    if (coordinate) {
-      getPlaceName();
-    }
-  }, [coordinate]);
+  const placeName = placeNameResult?.display_name;
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -85,10 +65,10 @@ export function MapContextMenu({ onClose }: MapContextMenuProps) {
       },
     },
     {
-      label: "Weather History", // New menu item
+      label: "Weather Forecast",
       icon: <Cloud className="h-4 w-4 text-blue-500" />,
       onClick: () => {
-        setWeatherhistoricalDrawerOpen(true); // Open the drawer
+        setWeatherhistoricalDrawerOpen(true);
         closeContextMenu();
       },
     },
