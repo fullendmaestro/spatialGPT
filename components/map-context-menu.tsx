@@ -3,17 +3,49 @@
 import type React from "react";
 
 import { useMapStore, useChatStore } from "@/lib/store";
-import { MapPin, Navigation, Info, X, Plus } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { MapPin, Navigation, Info, X, Plus, Cloud } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { reverseGeocode } from "@/lib/services/places-service";
 
 interface MapContextMenuProps {
   onClose: () => void;
 }
 
 export function MapContextMenu({ onClose }: MapContextMenuProps) {
-  const { contextMenuPosition, coordinate, closeContextMenu } = useMapStore();
+  const {
+    contextMenuPosition,
+    coordinate,
+    closeContextMenu,
+    setWeatherhistoricalDrawerOpen,
+  } = useMapStore();
   const { addCoordinateAttachment } = useChatStore();
   const menuRef = useRef<HTMLDivElement>(null);
+  const [placeName, setPlaceName] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Get place name when context menu opens
+  useEffect(() => {
+    const getPlaceName = async () => {
+      setIsLoading(true);
+      try {
+        const result = await reverseGeocode(
+          coordinate.latitude,
+          coordinate.longitude
+        );
+        if (result) {
+          setPlaceName(result.display_name);
+        }
+      } catch (error) {
+        console.error("Error getting place name:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (coordinate) {
+      getPlaceName();
+    }
+  }, [coordinate]);
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -52,6 +84,14 @@ export function MapContextMenu({ onClose }: MapContextMenuProps) {
         closeContextMenu();
       },
     },
+    {
+      label: "Weather History", // New menu item
+      icon: <Cloud className="h-4 w-4 text-blue-500" />,
+      onClick: () => {
+        setWeatherhistoricalDrawerOpen(true); // Open the drawer
+        closeContextMenu();
+      },
+    },
   ];
 
   // Ensure the menu stays within viewport bounds
@@ -82,6 +122,25 @@ export function MapContextMenu({ onClose }: MapContextMenuProps) {
             <X className="h-4 w-4" />
           </button>
         </div>
+
+        {isLoading ? (
+          <div className="p-2 border-b border-gray-200 dark:border-gray-700 text-xs">
+            <div className="font-medium truncate bg-gray-200 dark:bg-gray-700 h-4 w-3/4 animate-pulse"></div>
+            <div className="text-gray-500 dark:text-gray-400 truncate bg-gray-200 dark:bg-gray-700 h-3 w-1/2 animate-pulse mt-1"></div>
+          </div>
+        ) : (
+          placeName && (
+            <div className="p-2 border-b border-gray-200 dark:border-gray-700 text-xs">
+              <div className="font-medium truncate">
+                {placeName.split(",")[0]}
+              </div>
+              <div className="text-gray-500 dark:text-gray-400 truncate">
+                {placeName}
+              </div>
+            </div>
+          )
+        )}
+
         <div className="p-1">
           {menuItems.map((item, index) => (
             <button
