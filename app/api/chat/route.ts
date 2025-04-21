@@ -1,6 +1,11 @@
-import { systemPrompt } from "@/lib/ai/prompts";
+import { systemPrompt as baseSystemPrompt } from "@/lib/ai/prompts";
 import { myProvider } from "@/lib/ai/providers";
+import { getAirQuality } from "@/lib/ai/tools/get-air-quality";
+import { getClimateData } from "@/lib/ai/tools/get-climate-data";
+import { getDetailedForecast } from "@/lib/ai/tools/get-detailed-forecast";
+import { getHistoricalWeather } from "@/lib/ai/tools/get-historical-weather";
 import { getWeather } from "@/lib/ai/tools/get-weather";
+import { getWeatherAlerts } from "@/lib/ai/tools/get-weather-alerts";
 
 import { generateUUID } from "@/lib/utils";
 import { ExtUIMessage } from "@/types";
@@ -44,8 +49,10 @@ export async function POST(request: Request) {
   try {
     const {
       messages,
+      userPosition,
     }: {
       messages: Array<ExtUIMessage>;
+      userPosition: { latitude: number; longitude: number } | null;
     } = await request.json();
 
     // Reformat messages.
@@ -54,6 +61,21 @@ export async function POST(request: Request) {
     //        except the ai message schema.
     const reformattedMessages = reformatMessages(messages);
 
+    // Get the current time
+    const currentTime = new Date().toLocaleString();
+
+    // Inject user position into the prompt if available
+    const userPositionText = userPosition
+      ? `The user's current position is Latitude ${userPosition.latitude}, Longitude ${userPosition.longitude}.`
+      : "The user's position is not available.";
+
+    // Dynamically update the system prompt
+    const systemPrompt = `${baseSystemPrompt}
+
+Current Time: ${currentTime}
+${userPositionText}`;
+    console.log("System Prompt:", systemPrompt);
+
     return createDataStreamResponse({
       execute: (dataStream) => {
         const result = streamText({
@@ -61,11 +83,23 @@ export async function POST(request: Request) {
           system: systemPrompt,
           messages: reformattedMessages,
           maxSteps: 5,
-          experimental_activeTools: ["getWeather"],
+          experimental_activeTools: [
+            "getWeather",
+            "getDetailedForecast",
+            "getHistoricalWeather",
+            "getAirQuality",
+            "getClimateData",
+            "getWeatherAlerts",
+          ],
           experimental_transform: smoothStream({ chunking: "word" }),
           experimental_generateMessageId: generateUUID,
           tools: {
             getWeather,
+            getDetailedForecast,
+            getHistoricalWeather,
+            getAirQuality,
+            getClimateData,
+            getWeatherAlerts,
           },
           onFinish: async ({ response }) => {
             console.log("Response:", response.messages[0].content);
