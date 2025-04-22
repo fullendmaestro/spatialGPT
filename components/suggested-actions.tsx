@@ -27,11 +27,6 @@ function PureSuggestedActions({ append }: SuggestedActionsProps) {
       action: "How hot will it get in Phoenix next week?",
     },
     {
-      title: "Where is it sunny",
-      label: "and warm in Europe right now?",
-      action: "Where is it sunny and warm in Europe right now?",
-    },
-    {
       title: "Warn me if",
       label: "a strong wind alert is issued nearby.",
       action: "Warn me if a strong wind alert is issued nearby.",
