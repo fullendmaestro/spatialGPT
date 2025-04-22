@@ -23,6 +23,7 @@ function MapEventHandler() {
   useMapEvents({
     contextmenu: (e) => {
       const { lat, lng } = e.latlng;
+      console.log("Context menu event location:", lat, lng);
       setCoordinate({ latitude: lat, longitude: lng });
 
       // Get pixel coordinate for the context menu
@@ -107,35 +108,18 @@ const Map = () => {
       navigator.geolocation.getCurrentPosition(
         (location) => {
           const { latitude, longitude } = location.coords;
+          console.log("User's location:", latitude, longitude);
           setUserPosition({ latitude, longitude }); // Update userPosition in the store
           setCoordinate({ latitude, longitude });
         },
         (error) => {
           console.error("Error getting location:", error);
-          // Fallback to a default position if location access is denied
-          setUserPosition({
-            latitude: coordinate.latitude,
-            longitude: coordinate.longitude,
-          });
         }
       );
     } else {
       console.error("Geolocation is not supported by this browser.");
-      setUserPosition({
-        latitude: coordinate.latitude,
-        longitude: coordinate.longitude,
-      });
     }
-  }, [
-    setUserPosition,
-    setCoordinate,
-    coordinate.latitude,
-    coordinate.longitude,
-  ]);
-
-  // const markerPosition: [number, number] = userPosition
-  //   ? [userPosition.latitude, userPosition.longitude]
-  //   : [coordinate.latitude, coordinate.longitude];
+  }, []);
 
   // Get the appropriate tile layer URL based on the map type
   const getTileLayerUrl = () => {
