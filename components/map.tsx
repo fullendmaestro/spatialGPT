@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -14,6 +14,7 @@ import L from "leaflet";
 import { useMapStore } from "@/lib/store";
 import { MapContextMenu } from "./map-context-menu";
 import { MapControls } from "./map-controls";
+import { DataVisualizationDrawer } from "./data-visualization-drawer";
 
 // This component handles map events and updates the store
 function MapEventHandler() {
@@ -78,8 +79,13 @@ function MapControlsWrapper({
 }
 
 const Map = () => {
-  const [position, setPosition] = useState<[number, number] | null>(null);
-  const { coordinate, setCoordinate, isContextMenuOpen } = useMapStore();
+  const {
+    userPosition,
+    setUserPosition,
+    coordinate,
+    setCoordinate,
+    isContextMenuOpen,
+  } = useMapStore();
   const mapRef = useRef<L.Map | null>(null);
   const [mapType, setMapType] = useState<"street" | "satellite" | "terrain">(
     "street"
@@ -101,23 +107,34 @@ const Map = () => {
       navigator.geolocation.getCurrentPosition(
         (location) => {
           const { latitude, longitude } = location.coords;
-          setPosition([latitude, longitude]);
+          setUserPosition({ latitude, longitude }); // Update userPosition in the store
           setCoordinate({ latitude, longitude });
         },
         (error) => {
           console.error("Error getting location:", error);
           // Fallback to a default position if location access is denied
-          setPosition([coordinate.latitude, coordinate.longitude]);
+          setUserPosition({
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude,
+          });
         }
       );
     } else {
       console.error("Geolocation is not supported by this browser.");
-      setPosition([coordinate.latitude, coordinate.longitude]);
+      setUserPosition({
+        latitude: coordinate.latitude,
+        longitude: coordinate.longitude,
+      });
     }
-  }, [setCoordinate, coordinate.latitude, coordinate.longitude]);
+  }, [
+    setUserPosition,
+    setCoordinate,
+    coordinate.latitude,
+    coordinate.longitude,
+  ]);
 
-  const markerPosition: [number, number] = position
-    ? position
+  const markerPosition: [number, number] = userPosition
+    ? [userPosition.latitude, userPosition.longitude]
     : [coordinate.latitude, coordinate.longitude];
 
   // Get the appropriate tile layer URL based on the map type
@@ -150,7 +167,7 @@ const Map = () => {
 
   return (
     <div className="h-full w-full relative">
-      {position ? (
+      {userPosition ? (
         <MapContainer
           center={markerPosition}
           zoom={13}
@@ -186,6 +203,9 @@ const Map = () => {
           onClose={() => useMapStore.getState().closeContextMenu()}
         />
       )}
+
+      {/* Data visualization drawer */}
+      <DataVisualizationDrawer />
     </div>
   );
 };

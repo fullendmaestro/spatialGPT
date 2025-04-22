@@ -1,22 +1,31 @@
 "use client";
 
 import type React from "react";
-import { useMapStore, useChatStore } from "@/lib/store";
-import { MapPin, Navigation, Info, X, Plus, Cloud } from "lucide-react";
+import { useMapStore, useDrawerStore, useChatStore } from "@/lib/store";
+import {
+  MapPin,
+  Info,
+  X,
+  Plus,
+  Cloud,
+  BarChart3,
+  Wind,
+  Thermometer,
+  Waves,
+  Droplets,
+  Sun,
+} from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useReverseGeocode } from "@/hooks/use-reverse-geocode";
+import type { DataVisualizationType } from "@/lib/store/drawer-store";
 
 interface MapContextMenuProps {
   onClose: () => void;
 }
 
 export function MapContextMenu({ onClose }: MapContextMenuProps) {
-  const {
-    contextMenuPosition,
-    coordinate,
-    closeContextMenu,
-    setWeatherhistoricalDrawerOpen,
-  } = useMapStore();
+  const { contextMenuPosition, coordinate, closeContextMenu } = useMapStore();
+  const { setOpen, setCoordinate, setVisualizationType } = useDrawerStore();
   const { addCoordinateAttachment } = useChatStore();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -43,6 +52,13 @@ export function MapContextMenu({ onClose }: MapContextMenuProps) {
 
   if (!contextMenuPosition) return null;
 
+  const openVisualization = (type: DataVisualizationType) => {
+    setCoordinate(coordinate);
+    setVisualizationType(type);
+    setOpen(true);
+    closeContextMenu();
+  };
+
   const menuItems = [
     {
       label: "Add location as attachment",
@@ -67,10 +83,37 @@ export function MapContextMenu({ onClose }: MapContextMenuProps) {
     {
       label: "Weather Forecast",
       icon: <Cloud className="h-4 w-4 text-blue-500" />,
-      onClick: () => {
-        setWeatherhistoricalDrawerOpen(true);
-        closeContextMenu();
-      },
+      onClick: () => openVisualization("weather-forecast"),
+    },
+    {
+      label: "Historical Weather",
+      icon: <BarChart3 className="h-4 w-4 text-purple-500" />,
+      onClick: () => openVisualization("weather-history"),
+    },
+    {
+      label: "Air Quality",
+      icon: <Wind className="h-4 w-4 text-green-500" />,
+      onClick: () => openVisualization("air-quality"),
+    },
+    {
+      label: "Climate Change",
+      icon: <Thermometer className="h-4 w-4 text-red-500" />,
+      onClick: () => openVisualization("climate-change"),
+    },
+    {
+      label: "Marine Forecast",
+      icon: <Waves className="h-4 w-4 text-cyan-500" />,
+      onClick: () => openVisualization("marine"),
+    },
+    {
+      label: "Flood Data",
+      icon: <Droplets className="h-4 w-4 text-blue-700" />,
+      onClick: () => openVisualization("flood"),
+    },
+    {
+      label: "Solar Radiation",
+      icon: <Sun className="h-4 w-4 text-yellow-500" />,
+      onClick: () => openVisualization("solar-radiation"),
     },
   ];
 
@@ -121,7 +164,7 @@ export function MapContextMenu({ onClose }: MapContextMenuProps) {
           )
         )}
 
-        <div className="p-1">
+        <div className="p-1 max-h-40 overflow-y-auto">
           {menuItems.map((item, index) => (
             <button
               key={index}
