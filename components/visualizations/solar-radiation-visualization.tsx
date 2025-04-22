@@ -1,15 +1,30 @@
-"use client"
+"use client";
 
-import { useSolarRadiation } from "@/hooks/use-weather-data"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertTriangle } from "lucide-react"
-import { ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart, Area } from "recharts"
-import { format, parseISO } from "date-fns"
+import { useSolarRadiation } from "@/hooks/use-weather-data";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertTriangle } from "lucide-react";
+import {
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  AreaChart,
+  Area,
+} from "recharts";
+import { format, parseISO } from "date-fns";
 
 export function SolarRadiationVisualization() {
-  const { data, isLoading, isError, error } = useSolarRadiation()
+  const { data, isLoading, isError, error } = useSolarRadiation();
 
   if (isLoading) {
     return (
@@ -18,7 +33,7 @@ export function SolarRadiationVisualization() {
         <Skeleton className="h-[300px] w-full" />
         <Skeleton className="h-[300px] w-full" />
       </div>
-    )
+    );
   }
 
   if (isError) {
@@ -27,14 +42,16 @@ export function SolarRadiationVisualization() {
         <AlertTriangle className="h-4 w-4" />
         <AlertTitle>Error</AlertTitle>
         <AlertDescription>
-          {error instanceof Error ? error.message : "Failed to load solar radiation data"}
+          {error instanceof Error
+            ? error.message
+            : "Failed to load solar radiation data"}
         </AlertDescription>
       </Alert>
-    )
+    );
   }
 
   if (!data) {
-    return <div>No data available</div>
+    return <div>No data available</div>;
   }
 
   // Process data for charts
@@ -43,7 +60,7 @@ export function SolarRadiationVisualization() {
     shortwave: data.hourly.shortwave_radiation[index],
     direct: data.hourly.direct_radiation[index],
     diffuse: data.hourly.diffuse_radiation[index],
-  }))
+  }));
 
   return (
     <div className="space-y-6">
@@ -58,7 +75,11 @@ export function SolarRadiationVisualization() {
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={radiationData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="time" tickFormatter={(time) => format(parseISO(time), "HH:mm")} interval={2} />
+                <XAxis
+                  dataKey="time"
+                  tickFormatter={(time) => format(parseISO(time), "HH:mm")}
+                  interval={2}
+                />
                 <YAxis
                   label={{
                     value: "W/m²",
@@ -67,14 +88,16 @@ export function SolarRadiationVisualization() {
                   }}
                 />
                 <Tooltip
-                  labelFormatter={(label) => format(parseISO(label), "EEEE, MMM d, yyyy HH:mm")}
+                  labelFormatter={(label) =>
+                    format(parseISO(label), "EEEE, MMM d, yyyy HH:mm")
+                  }
                   formatter={(value, name) => [
                     `${value} W/m²`,
                     name === "shortwave"
                       ? "Shortwave Radiation"
                       : name === "direct"
-                        ? "Direct Radiation"
-                        : "Diffuse Radiation",
+                      ? "Direct Radiation"
+                      : "Diffuse Radiation",
                   ]}
                 />
                 <Legend />
@@ -112,27 +135,32 @@ export function SolarRadiationVisualization() {
       <Card>
         <CardHeader>
           <CardTitle>Solar Radiation Information</CardTitle>
-          <CardDescription>Understanding solar radiation measurements</CardDescription>
+          <CardDescription>
+            Understanding solar radiation measurements
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4 text-sm">
             <div>
               <h4 className="font-medium">Shortwave Radiation</h4>
               <p className="text-muted-foreground">
-                The total solar radiation reaching the Earth's surface, including both direct and diffuse components.
+                The total solar radiation reaching the Earth&apos;s surface,
+                including both direct and diffuse components.
               </p>
             </div>
             <div>
               <h4 className="font-medium">Direct Radiation</h4>
               <p className="text-muted-foreground">
-                Solar radiation that comes directly from the sun without being scattered by the atmosphere.
+                Solar radiation that comes directly from the sun without being
+                scattered by the atmosphere.
               </p>
             </div>
             <div>
               <h4 className="font-medium">Diffuse Radiation</h4>
               <p className="text-muted-foreground">
-                Solar radiation that has been scattered by molecules and particles in the atmosphere but still reaches
-                the Earth's surface.
+                Solar radiation that has been scattered by molecules and
+                particles in the atmosphere but still reaches the Earth&apos;s
+                surface.
               </p>
             </div>
             <div className="mt-4">
@@ -148,5 +176,5 @@ export function SolarRadiationVisualization() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
