@@ -1,6 +1,14 @@
 import { tool } from "ai";
 import { z } from "zod";
 
+// Define the type for weather alerts
+type WeatherAlert = {
+  type: string;
+  severity: string;
+  date: string; // or Date if you are using Date objects
+  details: string;
+};
+
 export const getWeatherAlerts = tool({
   description: "Get weather alerts and warnings for a specific location",
   parameters: z.object({
@@ -70,9 +78,10 @@ export const getWeatherAlerts = tool({
         65, 67, 71, 73, 75, 77, 82, 85, 86, 95, 96, 99,
       ];
 
-      // Generate alerts based on forecast data
-      const alerts = [];
+      // Initialize the alerts array with the defined type
+      const alerts: WeatherAlert[] = [];
 
+      // Generate alerts based on forecast data
       // Check daily data for alerts
       if (forecastData.daily) {
         const {
