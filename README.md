@@ -1,6 +1,6 @@
 # 🌍 spatialGPT
 
-SpatialGPT is an innovative map exploration application that seamlessly integrates weather data insights, and conversational AI. Whether you're planning your next adventure, analyzing climate patterns, or exploring new destinations, SpatialGPT empowers you to access and interpret complex space effortlessly. 🚀
+spatialGPT is an innovative map exploration application that seamlessly integrates weather data insights, and conversational AI. Whether you're planning your next adventure, analyzing climate patterns, or exploring new destinations, SpatialGPT empowers you to access and interpret complex space effortlessly. 🚀
 
 ## 🌟 Features
 
@@ -21,7 +21,7 @@ SpatialGPT is an innovative map exploration application that seamlessly integrat
 
 ## Use cases
 
-1. **Travel Planning**: Use SpatialGPT to explore destinations, check weather forecasts, and find nearby points of interest like restaurants, hotels, and attractions. E.g: **_Show me the weather forecast for Paris this weekend and suggest nearby cafes._**
+1. **Travel Planning**: Use SpatialGPT to explore destinations, check weather forecasts, and find nearby points of interest like restaurants, hotels, and attractions. E.g: **_Describe the weather forecast for Paris this weekend and suggest nearby cafes._**
 
 2. **Outdoor Activities**: Plan hikes, camping trips, or other outdoor adventures with terrain maps and real-time weather data.
 
@@ -30,6 +30,8 @@ SpatialGPT is an innovative map exploration application that seamlessly integrat
 4. **Business Applications**: Optimize logistics, site selection, or event planning by integrating weather and location-based insights.
 
 ## Ai assistant context:
+
+The following are the information the assistant have access to to provide relevant and accurate result:
 
     - User location (if user allow access)
     - Attached loacations during prompt
@@ -51,6 +53,10 @@ SpatialGPT is an innovative map exploration application that seamlessly integrat
    - [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API): Enables querying and retrieving map data, including Points of Interest (POI) such as restaurants, hotels, and cafes.
    - [Nominatim API](https://nominatim.org/): Provides geocoding and reverse geocoding services for location-based queries.
    - [Tile Server API](https://wiki.openstreetmap.org/wiki/Tile_servers): Supplies map tiles for rendering OpenStreetMap data in applications.
+3. **Graph Tile Layers**:
+   - **Street View**: [OpenStreetMap Standard Tiles](https://wiki.openstreetmap.org/wiki/Standard_tile_layer)
+   - **Satellite View**: [ArcGIS World Imagery](https://www.arcgis.com/home/)
+   - **Terrain View**: [OpenTopoMap](https://opentopomap.org/)
 
 ## 🛠️ Running Locally
 
@@ -101,6 +107,10 @@ This project is protected under the [Apache License](http://www.apache.org/licen
 
 ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white) fullendmaestro
 
-## [**_Demo_**](https://spatial-gpt.vercel.app/)
+## [**_Demo URL_**](https://spatial-gpt.vercel.app/)
+
+## Demo videos
+
+https://youtu.be/wT7y0JXmr-M, https://youtu.be/m_2QynWogGo, https://youtu.be/8t9Z2N72ojk
 
 **_🌟 Start exploring the world with SpatialGPT today! 🌟_**
