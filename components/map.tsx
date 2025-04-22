@@ -133,10 +133,9 @@ const Map = () => {
     coordinate.longitude,
   ]);
 
-  const markerPosition: [number, number] = [
-    coordinate.latitude,
-    coordinate.longitude,
-  ];
+  // const markerPosition: [number, number] = userPosition
+  //   ? [userPosition.latitude, userPosition.longitude]
+  //   : [coordinate.latitude, coordinate.longitude];
 
   // Get the appropriate tile layer URL based on the map type
   const getTileLayerUrl = () => {
@@ -170,7 +169,7 @@ const Map = () => {
     <div className="h-full w-full relative">
       {userPosition ? (
         <MapContainer
-          center={markerPosition}
+          center={[coordinate.latitude, coordinate.longitude]}
           zoom={13}
           scrollWheelZoom={true}
           style={{ height: "100%", width: "100%" }}
@@ -181,11 +180,11 @@ const Map = () => {
             url={getTileLayerUrl()}
           />
 
-          <Marker position={markerPosition}>
+          <Marker position={[coordinate.latitude, coordinate.longitude]}>
             <Popup>
               Selected location <br />
-              Latitude: {markerPosition[0].toFixed(4)}, Longitude:{" "}
-              {markerPosition[1].toFixed(4)}
+              Latitude: {coordinate.latitude.toFixed(4)}, Longitude:{" "}
+              {coordinate.longitude.toFixed(4)}
             </Popup>
           </Marker>
 
