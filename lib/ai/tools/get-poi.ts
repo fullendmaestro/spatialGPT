@@ -15,7 +15,7 @@ export const getPOI = tool({
     const data = await response.json();
 
     if (!data.elements || !data.elements.length) {
-      throw new Error("No points of interest found in the given radius.");
+      return "No points of interest found in the given radius.";
     }
 
     return data.elements.map((poi: any) => ({

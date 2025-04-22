@@ -60,7 +60,7 @@ export const getWeatherAlerts = tool({
       const forecastData = await response.json();
 
       if (forecastData.error) {
-        throw new Error(`Weather API error: ${forecastData.reason}`);
+        return `Weather API error: ${forecastData.reason}`;
       }
 
       // Define alert thresholds
@@ -208,8 +208,11 @@ export const getWeatherAlerts = tool({
         },
       };
     } catch (error) {
-      console.error("Error generating weather alerts:", error);
-      throw error;
+      return {
+        error: `Error generating weather alerts: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`,
+      };
     }
   },
 });

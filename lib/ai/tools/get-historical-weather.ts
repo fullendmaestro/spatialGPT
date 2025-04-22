@@ -59,7 +59,7 @@ export const getHistoricalWeather = tool({
       const data = await response.json();
 
       if (data.error) {
-        throw new Error(`Historical weather API error: ${data.reason}`);
+        return `Historical weather API error: ${data.reason}`;
       }
 
       // Add weather code interpretations
@@ -103,8 +103,11 @@ export const getHistoricalWeather = tool({
 
       return data;
     } catch (error) {
-      console.error("Error fetching historical weather data:", error);
-      throw error;
+      return {
+        error: `Error fetching historical weather data: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`,
+      };
     }
   },
 });

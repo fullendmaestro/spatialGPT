@@ -15,7 +15,7 @@ export const getGeocoding = tool({
     const data = await response.json();
 
     if (!data.length) {
-      throw new Error("No results found for the given query.");
+      return "No results found for the given query.";
     }
 
     return data.map((result: any) => ({
