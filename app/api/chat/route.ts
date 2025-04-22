@@ -6,6 +6,9 @@ import { getDetailedForecast } from "@/lib/ai/tools/get-detailed-forecast";
 import { getHistoricalWeather } from "@/lib/ai/tools/get-historical-weather";
 import { getWeather } from "@/lib/ai/tools/get-weather";
 import { getWeatherAlerts } from "@/lib/ai/tools/get-weather-alerts";
+import { getReverseGeocoding } from "@/lib/ai/tools/get-reverse-geocoding";
+import { getGeocoding } from "@/lib/ai/tools/get-geocoding";
+import { getPOI } from "@/lib/ai/tools/get-poi";
 
 import { generateUUID } from "@/lib/utils";
 import { ExtUIMessage } from "@/types";
@@ -90,6 +93,9 @@ ${userPositionText}`;
             "getAirQuality",
             "getClimateData",
             "getWeatherAlerts",
+            "getReverseGeocoding",
+            "getGeocoding",
+            "getPOI",
           ],
           experimental_transform: smoothStream({ chunking: "word" }),
           experimental_generateMessageId: generateUUID,
@@ -100,6 +106,9 @@ ${userPositionText}`;
             getAirQuality,
             getClimateData,
             getWeatherAlerts,
+            getReverseGeocoding,
+            getGeocoding,
+            getPOI,
           },
           onFinish: async ({ response }) => {
             console.log("Response:", response.messages[0].content);
