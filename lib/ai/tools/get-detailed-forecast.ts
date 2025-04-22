@@ -107,7 +107,7 @@ export const getDetailedForecast = tool({
       const data = await response.json();
 
       if (data.error) {
-        throw new Error(`Weather API error: ${data.reason}`);
+        return `Weather API error: ${data.reason}`;
       }
 
       // Add weather code interpretations
@@ -162,8 +162,11 @@ export const getDetailedForecast = tool({
 
       return data;
     } catch (error) {
-      console.error("Error fetching detailed forecast data:", error);
-      throw error;
+      return {
+        error: `Error fetching detailed forecast data: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`,
+      };
     }
   },
 });

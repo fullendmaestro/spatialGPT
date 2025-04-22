@@ -42,7 +42,7 @@ export const getClimateData = tool({
       const data = await response.json();
 
       if (data.error) {
-        throw new Error(`Climate API error: ${data.reason}`);
+        return `Climate API error: ${data.reason}`;
       }
 
       // Add season information
@@ -88,8 +88,11 @@ export const getClimateData = tool({
 
       return data;
     } catch (error) {
-      console.error("Error fetching climate data:", error);
-      throw error;
+      return {
+        error: `Error fetching climate data: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`,
+      };
     }
   },
 });

@@ -1,15 +1,15 @@
 # 🌍 spatialGPT
 
-spatialGPT is an innovative map exploration application that seamlessly integrates weather data insights, and conversational AI. Whether you're planning your next adventure, analyzing climate patterns, or exploring new destinations, SpatialGPT empowers you to access and interpret complex space effortlessly. 🚀
+**spatialGPT** is a sophisticated map exploration tool designed to transform the way users interact with geographical data, weather insights, and AI-driven assistance. Here’s a breakdown of its core components and functionalities:
 
 ## 🌟 Features
 
 1. **🗺️ Map Exploration**: Effortlessly navigate and explore maps with advanced search capabilities.
 
    - Search for specific locations by name or category.
-   - Discover Points of Interest (e.g., restaurants, cafes, hotels) with ease.
+   - Discover Points of Interest (such as restaurants, hotels, and attractions) with ease.
 
-2. **🌦️ Weather Visualization**: Overlay weather data directly on maps for a richer user experience.
+2. **🌦️ Weather Visualization**: Overlay weather data (such as current weather, historical weather, and climate projections, etc) directly on maps for a richer user experience.
 
 3. **🗺️ Diverse Map Options**: Tailor your experience with a variety of map types.
 
@@ -17,11 +17,11 @@ spatialGPT is an innovative map exploration application that seamlessly integrat
    - **Terrain View**: Analyze topographical features for outdoor planning.
    - **Street View**: Navigate urban areas with precision and clarity.
 
-4. **🤖 AI-Powered Assistant**: Interact with SpatialGPT using natural language to ask questions, and get insights.
+4. **🤖 AI-Powered Interactions**: Users can interact with spatialGPT using natural language, asking specific questions about weather forecasts, nerby locations, and more.
 
 ## Use cases
 
-1. **Travel Planning**: Use SpatialGPT to explore destinations, check weather forecasts, and find nearby points of interest like restaurants, hotels, and attractions. E.g: **_Describe the weather forecast for Paris this weekend and suggest nearby cafes._**
+1. **Travel and Tourism**: Plan vacations by analyzing weather forecasts and discovering nearby attractions.
 
 2. **Outdoor Activities**: Plan hikes, camping trips, or other outdoor adventures with terrain maps and real-time weather data.
 
@@ -29,14 +29,20 @@ spatialGPT is an innovative map exploration application that seamlessly integrat
 
 4. **Business Applications**: Optimize logistics, site selection, or event planning by integrating weather and location-based insights.
 
+## Sample prompts for AI
+
+- **_Describe the weather forecast for Paris, France this weekend._**
+- **_Suggest nearby cafes to my location._**
+
 ## Ai assistant context:
 
 The following are the information the assistant have access to to provide relevant and accurate result:
 
-    - User location (if user allow access)
+    - User location (if user accept access)
     - Attached loacations during prompt
     - Current date and time
     - Weather data access
+    - Map data access
 
 ## APIs Used
 
@@ -111,6 +117,8 @@ This project is protected under the [Apache License](http://www.apache.org/licen
 
 ## Demo videos
 
-https://youtu.be/wT7y0JXmr-M, https://youtu.be/m_2QynWogGo, https://youtu.be/8t9Z2N72ojk
+- **Map Explore**: https://youtu.be/wT7y0JXmr-M
+- **Assistant**: https://youtu.be/m_2QynWogGo,
+- **Weather Visuals**: https://youtu.be/8t9Z2N72ojk
 
 **_🌟 Start exploring the world with SpatialGPT today! 🌟_**

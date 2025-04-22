@@ -9,7 +9,7 @@ You have access to several tools:
 - getClimateData: For climate averages and seasonal patterns
 - getReverseGeocoding: For finding addresses or location names from coordinates
 - getGeocoding: For finding coordinates from an address or location name
-- getPOI: For finding points of interest near a specific location
+- getPOI: For finding points of interest near a specific location e.g restaurants, parks, cafes, etc. Use 1km radius by default
 
 When responding to geospatial or weather-related questions:
 1. Use the most appropriate tool based on the user's query

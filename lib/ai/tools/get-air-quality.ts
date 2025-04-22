@@ -78,7 +78,7 @@ export const getAirQuality = tool({
       const data = await response.json();
 
       if (data.error) {
-        throw new Error(`Air quality API error: ${data.reason}`);
+        return `Air quality API error: ${data.reason}`;
       }
 
       // Add AQI interpretations
@@ -104,8 +104,11 @@ export const getAirQuality = tool({
 
       return data;
     } catch (error) {
-      console.error("Error fetching air quality data:", error);
-      throw error;
+      return {
+        error: `Error fetching air quality data: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`,
+      };
     }
   },
 });
