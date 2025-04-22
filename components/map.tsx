@@ -133,9 +133,10 @@ const Map = () => {
     coordinate.longitude,
   ]);
 
-  const markerPosition: [number, number] = userPosition
-    ? [userPosition.latitude, userPosition.longitude]
-    : [coordinate.latitude, coordinate.longitude];
+  const markerPosition: [number, number] = [
+    coordinate.latitude,
+    coordinate.longitude,
+  ];
 
   // Get the appropriate tile layer URL based on the map type
   const getTileLayerUrl = () => {
