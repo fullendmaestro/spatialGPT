@@ -1,72 +1,106 @@
-SpatialGPT: Conversational Geospatial Weather Intelligence
-🔥 Core Idea
-An AI-powered assistant that helps users explore and understand weather patterns, forecasts, and climate trends for any location on Earth—through natural language and map-based interaction, powered by the Open-Meteo API and geolocation data.
+# 🌍 spatialGPT
 
-🎯 Key Use Cases
+SpatialGPT is an innovative map exploration application that seamlessly integrates weather data insights, and conversational AI. Whether you're planning your next adventure, analyzing climate patterns, or exploring new destinations, SpatialGPT empowers you to access and interpret complex space effortlessly. 🚀
 
-1. Localized Weather Q&A
-   Natural language prompts like:
+## 🌟 Features
 
-“What’s the weather in Tokyo this weekend?”
+1. **🗺️ Map Exploration**: Effortlessly navigate and explore maps with advanced search capabilities.
 
-“Will it snow in Berlin tomorrow?”
+   - Search for specific locations by name or category.
+   - Discover Points of Interest (e.g., restaurants, cafes, hotels) with ease.
 
-“How hot will it get in Phoenix next week?”
+2. **🌦️ Weather Visualization**: Overlay weather data directly on maps for a richer user experience.
 
-Supports current weather, 7–14 day forecasts, and hourly details (wind, temp, humidity).
+3. **🗺️ Diverse Map Options**: Tailor your experience with a variety of map types.
 
-2. Weather Trends & Historical Insight
-   Ask about historical weather trends using Open-Meteo’s archive support:
+   - **Satellite View**: Access detailed imagery for a bird's-eye perspective.
+   - **Terrain View**: Analyze topographical features for outdoor planning.
+   - **Street View**: Navigate urban areas with precision and clarity.
 
-“How has rainfall changed in Mumbai over the past 5 years?”
+4. **🤖 AI-Powered Assistant**: Interact with SpatialGPT using natural language to ask questions, and get insights.
 
-“What were the average temperatures in London last summer?”
+## Use cases
 
-Visualize trends using charts/graphs tied to maps.
+1. **Travel Planning**: Use SpatialGPT to explore destinations, check weather forecasts, and find nearby points of interest like restaurants, hotels, and attractions. E.g: **_Show me the weather forecast for Paris this weekend and suggest nearby cafes._**
 
-3. Climate-Aware Travel & Planning
-   Assist users in choosing destinations or planning trips based on climate:
+2. **Outdoor Activities**: Plan hikes, camping trips, or other outdoor adventures with terrain maps and real-time weather data.
 
-“Where is it sunny and warm in Europe right now?”
+3. **Emergency Preparedness**: Stay informed about severe weather alerts and air quality conditions to ensure safety during emergencies.
 
-“I want to hike in a cool place with no rain this week—any suggestions?”
+4. **Business Applications**: Optimize logistics, site selection, or event planning by integrating weather and location-based insights.
 
-Combine Open-Meteo forecasts with hiking trails, points of interest via OpenStreetMap.
+## Ai assistant context:
 
-4. Extreme Weather Alerts
-   Real-time monitoring and alerts:
+    - User location (if user allow access)
+    - Attached loacations during prompt
+    - Current date and time
+    - Weather data access
 
-“Are there any heatwaves or storms nearby?”
+## APIs Used
 
-“Warn me if a strong wind alert is issued within 50 km.”
+1. **Open-Meteo API**:
+   - [Weather Forecasts API](https://open-meteo.com/en/docs): Provides accurate and up-to-date weather forecasts.
+   - [Historical Weather Data API](https://open-meteo.com/en/docs/historical-weather-api): Access historical weather data for analysis.
+   - [Climate Insights API](https://open-meteo.com/en/docs/climate-api): Offers climate projections and insights.
+   - [Air Quality API](https://open-meteo.com/en/docs/air-quality-api): Supplies air quality data for various locations.
+   - [Marine Weather API](https://open-meteo.com/en/docs/marine-weather-api): Delivers marine weather forecasts, including wave heights and wind conditions.
+   - [Satellite Radiation API](https://open-meteo.com/en/docs/satellite-radiation-api): Provides satellite-based radiation data.
+   - [Flood API](https://open-meteo.com/en/docs/flood-api): Supplies river discharge and flood-related data for emergency preparedness.
+   - [Ensemble Models API](https://open-meteo.com/en/docs/ensemble-api): Offers climate projections using multiple climate models.
+2. **OpenStreetMap API**:
+   - [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API): Enables querying and retrieving map data, including Points of Interest (POI) such as restaurants, hotels, and cafes.
+   - [Nominatim API](https://nominatim.org/): Provides geocoding and reverse geocoding services for location-based queries.
+   - [Tile Server API](https://wiki.openstreetmap.org/wiki/Tile_servers): Supplies map tiles for rendering OpenStreetMap data in applications.
 
-Could use natural hazard feeds or augment Open-Meteo’s wind/gust thresholds.
+## 🛠️ Running Locally
 
-5. Environmental Learning
-   Ask climate and weather-related science questions contextualized to location:
+### Prerequisites
 
-“Why is it so windy in the Netherlands?”
+Node.js, pnpm or npm
 
-“What’s a rain shadow and where can I see one?”
+### Installation
 
-“What kind of climate does Nairobi have?”
+1. Clone the repository:
 
-🧭 User Experience
-🗺️ Map-based interaction: Right-click or tap to ask, “What’s the weather here?” or “Attach this location to a prompt.”
+   ```bash
+   git clone https://github.com/fullendmaestro/spatialGPT
+   cd spatialGPT
+   ```
 
-💬 Chat interface: Gemini responds naturally and intelligently, backed by real-time weather data.
+2. Update environment variables:
 
-📊 Visual components: Graphs, timelines, heatmaps for temperature or rainfall.
+   Get your Google Gemini API Key here https://cloud.google.com/vertex-ai
+   If you want to support file upload with the chat bot: https://vercel.com/docs/storage/vercel-blob
 
-🔧 APIs & Tools
-Open-Meteo: Weather, historical, and forecast data
+   ```bash
+   GOOGLE_GENERATIVE_AI_API_KEY=------
+   BLOB_READ_WRITE_TOKEN=-----
+   ```
 
-OpenStreetMap / Leaflet / MapLibre: Mapping
+3. Install dependencies:
 
-Gemini 1.5 Pro: Natural language interface
+   ```bash
+   pnpm install
+   ```
 
-Optional:
+4. Run the project:
 
-NASA POWER for enhanced climate variables
+   ```bash
+   pnpm run dev
+   ```
 
-Air Quality Open Data Platform for air quality overlays
+   This start and application server running on `http://localhost:3000/`.
+
+**_You can now Access the application at `http://localhost:3000`. 🌐_**
+
+## 📜 License
+
+This project is protected under the [Apache License](http://www.apache.org/licenses/LICENSE-2.0/) License. For more details, refer to the [LICENSE](https://github.com/fullendmaestro/spatialGPT/blob/main/LICENSE) file.
+
+## Discord
+
+![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white) fullendmaestro
+
+## [**_Demo_**](https://spatial-gpt.vercel.app/)
+
+**_🌟 Start exploring the world with SpatialGPT today! 🌟_**
